@@ -1,23 +1,63 @@
 let counter = 1;
+const dataList = [];
 
+const tableDiv = document.querySelector("#table");
 const contentBox = document.querySelector("#content-box");
 const btn = document.querySelector("#btn");
+
+const renderLiEle = (ele, data) => `<${ele}>${data}</${ele}>`;
 
 /**
  * Render Contents
  */
 const renderHTML = (data) => {
+  const {
+    firstName,
+    lastName,
+    gender,
+    email,
+    ip_address,
+    country,
+    phone,
+  } = data;
+
+  dataList.push(data);
   let htmlStr = "";
 
   // for (const item of data) {
-  htmlStr += `<p>Title: ${data.title}, Comment: ${data.comment}</p>`;
+  // htmlStr += `<p>Title: ${data.title}, Comment: ${data.comment}</p>`;
   // }
+
+  htmlStr += `
+    <p>
+      <ul>
+        <li>Name: ${firstName} ${lastName}</li>
+        <li>Gender: ${gender}</li>
+        <li>eMail: ${email}</li>
+        <li>IP: ${ip_address}</li>
+        <li>Contry: ${country}</li>
+        <li>Phone: ${phone}</li>
+      </ul>
+    </p>`;
 
   contentBox.insertAdjacentHTML("beforeend", htmlStr);
   counter++;
-
-  if (counter > 3) {
+  console.log(tableDiv);
+  if (counter > 9) {
     btn.classList.add("hide-me");
+
+    // const tableEle = js.CreateTable(dataList);
+    const tableEle = js.CreateTable(dataList, [
+      "ID",
+      "First Name",
+      "Last Name",
+      "Gender",
+      "Email",
+      "IP",
+      "Country",
+      "Phone",
+    ]);
+    tableDiv.innerHTML = tableEle;
   }
 };
 
@@ -27,7 +67,7 @@ const renderHTML = (data) => {
 btn.addEventListener("click", () => {
   const xmlRequest = new XMLHttpRequest();
 
-  xmlRequest.open("GET", `http://localhost:3000/post/${counter}`);
+  xmlRequest.open("GET", `http://localhost:3000/people/${counter}`);
 
   xmlRequest.onload = () => {
     const { status, responseText } = xmlRequest;
@@ -41,7 +81,7 @@ btn.addEventListener("click", () => {
     }
 
     console.log(
-      "Connected to the server, but get something error from the response",
+      "Connected to the server, but get something error from the response"
     );
   };
 
@@ -54,3 +94,28 @@ btn.addEventListener("click", () => {
 
   xmlRequest.send();
 });
+
+const createJSONArray = () => {
+  const totalRows = 10;
+  console.time("create json array");
+
+  const arr = [];
+
+  for (const key of Array(totalRows).keys()) {
+    arr.push({
+      id: key,
+      firstName: chance.first(),
+      lastName: chance.last(),
+      gender: chance.gender(),
+      email: chance.email({ domain: "gameil.com" }),
+      ip_address: chance.ip(),
+      country: chance.country({ full: true }),
+      // city: chance.city(),
+      phone: chance.phone({ mobile: true }),
+    });
+  }
+  console.timeEnd("create json array");
+  console.log(JSON.stringify(arr));
+};
+
+// createJSONArray();
