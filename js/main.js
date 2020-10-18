@@ -3,7 +3,9 @@
  */
 
 let counter = 1;
+const dataList = [];
 
+const tableDiv = document.querySelector("#table");
 const contentBox = document.querySelector("#content-box");
 const btn = document.querySelector("#btn");
 
@@ -23,6 +25,7 @@ const renderHTML = (data) => {
     phone,
   } = data;
 
+  dataList.push(data);
   let htmlStr = "";
 
   // for (const item of data) {
@@ -43,9 +46,22 @@ const renderHTML = (data) => {
 
   contentBox.insertAdjacentHTML("beforeend", htmlStr);
   counter++;
-
+  console.log(tableDiv);
   if (counter > 9) {
     btn.classList.add("hide-me");
+
+    // const tableEle = js.CreateTable(dataList);
+    const tableEle = js.CreateTable(dataList, [
+      "ID",
+      "First Name",
+      "Last Name",
+      "Gender",
+      "Email",
+      "IP",
+      "Country",
+      "Phone",
+    ]);
+    tableDiv.innerHTML = tableEle;
   }
 };
 
