@@ -1,7 +1,3 @@
-/**
- * AJAX - Asynchronouns JavaScript And XML(JSON)
- */
-
 let counter = 1;
 
 const contentBox = document.querySelector("#content-box");
