@@ -1,0 +1,7 @@
+{
+  "post": [
+    { "id": 1, "title": "hello", "comment": "world" },
+    { "id": 2, "title": "google", "comment": "Search Engine" },
+    { "id": 3, "title": "Apple", "comment": "iPhone" }
+  ]
+}
